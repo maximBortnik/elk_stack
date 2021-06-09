@@ -1,0 +1,100 @@
+## Overall Cluster Health
+curl -X GET "localhost:9200/_cat/health?v"
+
+## Node Health
+curl -X GET "localhost:9200/_cat/nodes?v"
+
+## List indexes
+curl -X GET "localhost:9200/_cat/indices?v"
+
+## Create index
+curl -X PUT "localhost:9200/elk"
+
+## Create event
+curl -H "Content-Type: application/json" -X POST "localhost:9200/elk/event/1" -d @1.json
+
+## Update event
+curl -H "Content-Type: application/json" -X PUT "localhost:9200/elk/event/1" -d @1.1.json
+
+## Get event
+curl -X GET "localhost:9200/elk/event/1"
+
+## Get all events
+curl -X GET "localhost:9200/elk/event/_search"
+
+## Search events
+GET /elk/event/_search
+{
+  "query": {
+    "match": {
+      "type": "WORKSHOP"
+    }
+  }
+}
+
+GET /elk/event/_search
+{
+  "query": {
+    "match": {
+      "title": "java"
+    }
+  }
+}
+
+GET /elk/event/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "time": {
+              "gt":"2021-05-04"
+            }
+          }
+        },
+        {
+          "match": {
+            "title": "JavaScript"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET /elk/event/_search
+{
+  "size": 0,
+  "aggs": {
+    "count": {
+      "terms": {
+        "field": "type.keyword",
+        "size": 10
+      }
+    }
+  }
+}
+
+GET /elk/event/_search
+{
+    "query": {
+    "match": {
+      "title": "java"
+    }
+  },
+  "aggs": {
+    "count": {
+      "terms": {
+        "field": "type.keyword",
+        "size": 10
+      }
+    }
+  }
+}
+
+## Delete event
+curl -X DELETE "localhost:9200/elk/event/1"
+
+## Delete index
+curl -X DELETE "localhost:9200/elk"

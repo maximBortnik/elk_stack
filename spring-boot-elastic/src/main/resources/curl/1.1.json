@@ -1,0 +1,11 @@
+{
+  "id": "1",
+  "title": "python",
+  "type": "WORKSHOP",
+  "time": "2013-05-04 02:41:11",
+  "place": "epam",
+  "description": "fake_data",
+  "topics": [
+    "elk"
+  ]
+}
