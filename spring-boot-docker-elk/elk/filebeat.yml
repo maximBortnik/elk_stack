@@ -1,0 +1,10 @@
+output.logstash:
+  enabled: true
+  hosts: ["logstash:5044"]
+  index: spring-boot-docker-elk
+
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/spring-boot-docker-elk/*.log
